@@ -1,19 +1,35 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ADD_TODO, REMOVE_TODO, TOGGLE_TODO } from '../actions/Todos/TodoActionTypes'
 
+const TodoReducer = (state, action) => {
+    switch (action.type) {
+        case ADD_TODO:
+            return {
+                id: uuidv4(),
+                completed: false,
+                title: action.payload.title,
+                body: action.payload.body
+            }
+        case TOGGLE_TODO: 
+            if(state.id !== action.payload) return state;
+            return {
+                ...state, 
+                completed: !state.completed
+            }
+        default:
+            return state;
+    }
+}
+
+
 const TodosReducer = (state, action) => {
     switch (action.type) {
         case ADD_TODO:
-            const { payload } = action; 
-            payload.id = uuidv4();
-            payload.completed = false; 
-            return [payload, ...state];
+            return [TodoReducer(null, action), ...state];
         case REMOVE_TODO: 
             return state.filter(todo => todo.id !== action.payload)
         case TOGGLE_TODO: 
-            return state.map(todo => {
-                return todo.id === action.payload ? {...todo, completed: !todo.completed} : todo
-            })
+            return state.map(todo => TodoReducer(todo, action))
         default:
             return state; 
     }
