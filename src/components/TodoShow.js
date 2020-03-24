@@ -1,14 +1,13 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 
-export const TodosContext = createContext();
 
-const TodosProvider = (props) => {
-    const [todos, setTodos] = useState();
+const TodoShow = ({ todo }) => {
     return(
-        <TodosContext.Provider >
-            {props.children}
-        </TodosContext.Provider>
+        <li>
+            <h3>{todo.title}</h3>
+            <p>{todo.body}</p>
+        </li>
     )
 }
 
-export default TodosProvider;
+export default TodoShow; 
