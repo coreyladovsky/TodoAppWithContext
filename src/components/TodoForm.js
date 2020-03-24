@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { TodosContext } from '../providers/TodosProvider';
+import { addTodo } from '../actions/Todos/TodoActions';
+
 
 const TodoForm = () => {
     const [ title, setTitle ] = useState("");
@@ -8,10 +10,7 @@ const TodoForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch({
-                type: "ADD_TODO",
-                payload: { title, body }
-            })
+        dispatch(addTodo({ title, body }))
         setTitle("");
         setBody("")
     }
