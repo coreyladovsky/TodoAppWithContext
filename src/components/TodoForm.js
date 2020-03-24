@@ -4,11 +4,14 @@ import { TodosContext } from '../providers/TodosProvider';
 const TodoForm = () => {
     const [ title, setTitle ] = useState("");
     const [ body, setBody ] = useState("");
-    const { addTodo } = useContext(TodosContext);
+    const { dispatch } = useContext(TodosContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addTodo({ title, body })
+        dispatch({
+                type: "ADD_TODO",
+                payload: { title, body }
+            })
         setTitle("");
         setBody("")
     }
